@@ -48,8 +48,8 @@ public class Player extends Character {
     }
 
     public void addItem(Item item) {
-        // ESE - Sword
-        // LIST - [{Sword}, {Hammer}]
+        // ESE - Mõõk
+        // LIST - [{name:Sword,..}, {name:Hammer}]
         if (items.contains(item)) {
             this.items.stream()
                     .filter(i -> i.getName().equals(item.getName()))

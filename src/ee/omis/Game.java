@@ -1,13 +1,7 @@
 package ee.omis;
 
-import ee.omis.character.Direction;
-import ee.omis.character.Enemy;
-import ee.omis.character.Player;
-import ee.omis.character.QuestMaster;
-import ee.omis.item.Dagger;
-import ee.omis.item.Hammer;
-import ee.omis.item.Item;
-import ee.omis.item.Sword;
+import ee.omis.character.*;
+import ee.omis.item.*;
 
 import java.sql.SQLOutput;
 import java.util.Arrays;
@@ -19,15 +13,17 @@ public class Game {
         World world = new World(5,10);
         Player player = new Player("Player");
         Enemy enemy = new Enemy("Enemy");
+        Healer healer = new Healer();
         QuestMaster questMaster = new QuestMaster("QuestMaster");
 
-        Sword sword = new Sword("Mõõk",10.0, 1);
-        Dagger dagger = new Dagger("Pistoda",5.0, 2);
-        Hammer hammer = new Hammer("Haamer",3.0, 5);
+        Sword sword = new Sword();
+        Dagger dagger = new Dagger();
+        Hammer hammer = new Hammer();
+        Teleporter teleporter = new Teleporter();
 
-        world.setCharacters(Arrays.asList(enemy,questMaster,player));
-        world.setItems(Arrays.asList(sword, dagger, hammer));
-        checkCharacterCoordinates(player, enemy, questMaster, false);
+        world.setCharacters(Arrays.asList(enemy,questMaster,healer,player));
+        world.setItems(Arrays.asList(sword, dagger, hammer, teleporter));
+        checkCharacterCoordinates(player, enemy, questMaster, healer, false);
         world.render();
 
         Scanner scanner = new Scanner(System.in);
@@ -58,6 +54,8 @@ public class Game {
                     player.getyCoord() == enemy.getyCoord() && enemy.isVisible()) {
                 if (player.getItems().size() < 1) {
                     System.out.println("SA EI SAA VÕIDELDA, KUI SUL POLE RELVI, KOGU MAAST");
+                } else if (player.getHealth() < 1) {
+                    System.out.println("SA EI SAA VÕIDELDA, KUI SUL ON ELUD OTSAS");
                 } else {
                     player.showItems();
                     System.out.println("VALI NUMBER MILLIST RELVA KASUTADA TAHAD: ");
@@ -78,26 +76,37 @@ public class Game {
                                     .findFirst()
                                     .ifPresent(e -> e.setDurability(e.getDurability()-1));
 
-                            System.out.println("ÜTLE NUMBER 1-st 3-ni JA KUI PANED TÄPPI, SIIS VÕIDAD VASTASE");
-                            input = scanner.nextLine();
-                            while(!input.equals("1") && !input.equals("2") && !input.equals("3")) {
-                                System.out.println("ÜTLE NUMBER 1-st 3-ni JA KUI PANED TÄPPI, SIIS VÕIDAD VASTASE");
-                                input = scanner.nextLine();
-                            }
-                            int randomNumber = (int) (Math.random() * ( 3 - 1 ) + 1 );
-                            if (randomNumber == Integer.parseInt(input)) {
-                                System.out.println("ÕIGE! VÕTSID VASTASELT ELU");
-                                enemy.loseHealth(chosenItem);
-                                System.out.println(enemy.getHealth());
+                            if (finalChosenItem.getName().equals("Teleporter")) {
+                                player.setRandomCoordinates();
+                                checkCharacterCoordinates(player, enemy, questMaster, healer, false);
                             } else {
-                                System.out.println("VALE! KAOTASID ELU");
-                                player.loseHealth();
-                                System.out.println(player.getHealth());
+                                while (player.getHealth() > 0 && Enemy.getHealth() > 0) {
+                                    System.out.println("ÜTLE NUMBER 1-st 3-ni JA KUI PANED TÄPPI, SIIS VÕIDAD VASTASE");
+                                    input = scanner.nextLine();
+                                    while(!input.equals("1") && !input.equals("2") && !input.equals("3")) {
+                                        System.out.println("ÜTLE NUMBER 1-st 3-ni JA KUI PANED TÄPPI, SIIS VÕIDAD VASTASE");
+                                        input = scanner.nextLine();
+                                    }
+                                    int randomNumber = (int) (Math.random() * ( 3 ) + 1 );
+                                    System.out.println(randomNumber);
+                                    if (randomNumber == Integer.parseInt(input)) {
+                                        System.out.println("ÕIGE! VÕTSID VASTASELT ELU");
+                                        ((FightWeapon)(finalChosenItem)).hit();
+                                        System.out.println(Enemy.getHealth());
+                                        if (Enemy.getHealth()<1) {
+                                            System.out.println("TAPSID VASTASE!");
+                                            enemy.setVisible(false);
+                                            enemy.setRandomCoordinates();
+                                            Enemy.reboost();
+                                            checkCharacterCoordinates(player, enemy, questMaster, healer, true);
+                                        }
+                                    } else {
+                                        System.out.println("VALE! KAOTASID ELU");
+                                        player.loseHealth();
+                                        System.out.println(player.getHealth());
+                                    }
+                                }
                             }
-
-                            enemy.setVisible(false);
-                            enemy.setRandomCoordinates();
-                            checkCharacterCoordinates(player, enemy, questMaster, true);
                         } catch (NumberFormatException e) {
                             System.out.println("SISESTA NUMBER!");
                             player.showItems();
@@ -108,6 +117,8 @@ public class Game {
                             player.showItems();
                             System.out.println("VALI NUMBER MILLIST RELVA KASUTADA TAHAD: ");
                             input = scanner.nextLine();
+                        } catch (Exception e) {
+                            System.out.println("SEDA VIGA EI TOHIKS");
                         }
                     }
                 }
@@ -115,6 +126,7 @@ public class Game {
             checkIfPlayerCanGetItem(player,sword);
             checkIfPlayerCanGetItem(player,dagger);
             checkIfPlayerCanGetItem(player,hammer);
+            checkIfPlayerCanGetItem(player,teleporter);
 
             world.render();
             input = scanner.nextLine();
@@ -129,20 +141,26 @@ public class Game {
         }
     }
 
-    private static void checkCharacterCoordinates(Player player, Enemy enemy, QuestMaster questMaster, boolean playerOnQuestMaster) {
+    private static void checkCharacterCoordinates(Player player, Enemy enemy, QuestMaster questMaster, Healer healer, boolean playerOnQuestMaster) {
         if (player.getxCoord() == questMaster.getxCoord() &&
                 player.getyCoord() == questMaster.getyCoord() && !playerOnQuestMaster) {
             player.setRandomCoordinates();
-            checkCharacterCoordinates(player, enemy, questMaster, false);
+            checkCharacterCoordinates(player, enemy, questMaster, healer, false);
         }
         if (player.getxCoord() == enemy.getxCoord() &&
                 player.getyCoord() == enemy.getyCoord() ) {
             enemy.setRandomCoordinates();
+            checkCharacterCoordinates(player, enemy, questMaster, healer, playerOnQuestMaster);
+        }
+        if (healer.getxCoord() == questMaster.getxCoord() &&
+                healer.getyCoord() == questMaster.getyCoord() ) {
+            healer.setRandomCoordinates();
+            checkCharacterCoordinates(player, enemy, questMaster, healer, false);
         }
         if (questMaster.getxCoord() == enemy.getxCoord() &&
                 questMaster.getyCoord() == enemy.getyCoord()) {
             enemy.setRandomCoordinates();
-            checkCharacterCoordinates(player, enemy, questMaster, playerOnQuestMaster);
+            checkCharacterCoordinates(player, enemy, questMaster, healer, playerOnQuestMaster);
         }
     }
 }

@@ -88,10 +88,33 @@ public class Item implements WorldObject {
 
     public void setLevel(int level) {
         this.level = level;
+        if (this.level < 3) {
+            this.itemType = ItemType.SILVER;
+        } else if (this.level < 5) {
+            this.itemType = ItemType.GOLD;
+        } else if (this.level < 7) {
+            this.itemType = ItemType.PLATINUM;
+        } else {
+            this.itemType = ItemType.TITANIUM;
+        }
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public double getStrengthFromItemType(double strength) {
+        switch (itemType) {
+            case SILVER:
+                strength *= 0.75;
+                break;
+            case GOLD:
+                strength *= 1;
+                break;
+            case PLATINUM:
+                strength *= 1.25;
+                break;
+            case TITANIUM:
+                strength *= 1.5;
+                break;
+        }
+        return strength;
     }
 
     public void setItemType(ItemType itemType) {
