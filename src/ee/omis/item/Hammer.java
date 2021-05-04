@@ -1,7 +1,5 @@
 package ee.omis.item;
 
-import ee.omis.character.Enemy;
-
 public class Hammer extends Item implements FightWeapon {
     private static double strength = 3.0;
     public Hammer() {
@@ -9,11 +7,11 @@ public class Hammer extends Item implements FightWeapon {
     }
 
     @Override
-    public void hit() {
+    public double hit() {
         strength = getStrengthFromItemType(strength);
-        strength *= randomiseStrength();
-        Enemy.decreaseHealth((int)strength);
         setLevel(getLevel()+1);
+        strength *= randomiseStrength();
+        return strength;
     }
 
     private double randomiseStrength() {

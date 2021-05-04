@@ -7,19 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Player extends Character {
+public class Player extends Character implements FightCharacter {
     private Direction direction;
     private int health;
+    private int lives;
     private List<Item> items = new ArrayList<>();
 
-    public Player(String name) {
-        super(name, 'X', true);
+    public Player() {
+        super('X', true);
         this.direction = Direction.UP;
         this.health = 3;
-    }
-
-    public Direction getDirection() {
-        return direction;
+        this.lives = 1;
     }
 
     public void setDirection(Direction direction) {
@@ -28,6 +26,14 @@ public class Player extends Character {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void takeLife() {
+        this.lives--;
     }
 
     public List<Item> getItems() {
@@ -43,13 +49,10 @@ public class Player extends Character {
                         i+1 + ": " + items.get(i).getName() +
                                 ", tugevusega: " + items.get(i).getStrength() +
                                 ", kasutuskordi: " + items.get(i).getDurability());
-                // Ilusam oleks toString() sisse see teha ja siis this.items.get(i)
         }
     }
 
     public void addItem(Item item) {
-        // ESE - Mõõk
-        // LIST - [{name:Sword,..}, {name:Hammer}]
         if (items.contains(item)) {
             this.items.stream()
                     .filter(i -> i.getName().equals(item.getName()))
@@ -87,5 +90,10 @@ public class Player extends Character {
 
     public void loseHealth() {
         this.health--;
+    }
+
+    @Override
+    public void reboost() {
+        this.health = 3;
     }
 }

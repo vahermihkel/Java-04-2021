@@ -4,14 +4,12 @@ import ee.omis.World;
 import ee.omis.WorldObject;
 
 public class Character implements WorldObject {
-    private String name;
     private int xCoord;
     private int yCoord;
-    private char symbol;
+    private final char symbol;
     private boolean isVisible;
 
-    public Character(String name, char symbol, boolean isVisible) {
-        this.name = name;
+    public Character(char symbol, boolean isVisible) {
         setRandomCoordinates();
         this.symbol = symbol;
         this.isVisible = isVisible;
@@ -20,15 +18,6 @@ public class Character implements WorldObject {
     public void setRandomCoordinates() {
         this.xCoord = (int) (Math.random() * ( World.getWidth() - 1 ) + 1 );
         this.yCoord = (int) (Math.random() * ( World.getHeight() - 1 ) + 1 );
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getxCoord() {
@@ -49,10 +38,6 @@ public class Character implements WorldObject {
 
     public char getSymbol() {
         return symbol;
-    }
-
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
     }
 
     public boolean isVisible() {
