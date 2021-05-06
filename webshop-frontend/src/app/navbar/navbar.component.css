@@ -1,0 +1,23 @@
+.navbar {
+  background-color: #0db1b1;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 60px;
+  cursor: pointer;
+}
+
+.cart-button {
+  background-color: blue;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.cart-button:hover {
+  color: rgb(214, 214, 214);
+}
