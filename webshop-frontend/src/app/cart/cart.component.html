@@ -1,1 +1,18 @@
-<p>cart works!</p>
+<button *ngIf="cartItems.length > 0;else emptyCartMessage" (click)="onEmptyCart()">Tühjenda ostukorv</button>
+<ng-template #emptyCartMessage>
+  <div>Ostukorv on tühi</div>
+  <br><br><br>
+</ng-template>
+
+<div *ngFor="let cartItem of cartItems; let i = index">
+  <img class="item-picture" src="{{ cartItem.imgSrc }}">
+  <div class="item-title">{{ cartItem.title }}</div>
+  <div class="item-price">{{ cartItem.price }}</div>
+  <button (click)="onRemoveFromCart(i)">X</button>
+</div>
+
+<div>KOKKU: {{ sumOfCart }} €</div>
+
+<!-- KÕIK MUUTUJAD MIS ON HTML-s PEAVAD OLEMA KAS: -->
+<!-- 1. ts sees -->
+<!-- 2. HTML-s let järel -->

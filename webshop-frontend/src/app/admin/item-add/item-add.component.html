@@ -1,0 +1,15 @@
+<!-- <div routerLink="..">TAGASI</div> -->
+<div routerLink="/admin">TAGASI</div>
+
+<form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
+  <label>NIMETUS</label><br>
+  <input type="text" ngModel name="title" placeholder="Sisesta toote nimetus" required><br>
+  <label>HIND</label><br>
+  <input type="number" ngModel name="price" placeholder="Sisesta toote hind" required><br>
+  <label>PILDI URL</label><br>
+  <input type="text" ngModel name="imgSrc" placeholder="Sisesta toote nimetus" required><br>
+  <label>KATEGOORIA</label><br>
+  <input type="text" ngModel name="category" placeholder="Sisesta toote nimetus" pattern="^[a-zA-Z]+$" required><br>
+  <button [disabled]="addItemForm.invalid">SISESTA</button>
+  <!-- PROPERTY BINDING -->
+</form>
