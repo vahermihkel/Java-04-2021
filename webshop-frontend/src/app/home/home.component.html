@@ -1,7 +1,7 @@
 <!-- string interpolation -->
 <div class="items-wrapper">
-  <div class="item" *ngFor="let item of items">
-    <img class="item-image" src="{{ item.imgSrc }}">
+  <div class="item" *ngFor="let item of items; let i = index">
+    <img class="item-image" routerLink="toode/{{i}}" src="{{ item.imgSrc }}">
     <div class="item-title">{{ item.title }}</div>
     <div class="item-price">{{ item.price }}</div>
     <button class="btn btn-primary" (click)="onAddToCart(item)">LISA OSTUKORVI</button>

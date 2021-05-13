@@ -15,8 +15,8 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("CART componendis");
-    this.cartItems = this.cartService.itemsInCart;
-
+    this.cartItems = this.cartService.getCartItems();
+    
     /*[{title: .., price: 20},{title: .., price: 30}]
       cartItem =>  {title: .., price: 20}  
       20    = 0 + 20
@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
   }
 
   onRemoveFromCart(index: number) {
-    this.cartService.itemsInCart.splice(index, 1);
+    this.cartService.removeFromCart(index);
     this.calculateSumOfCart();
   }
 
@@ -35,8 +35,8 @@ export class CartComponent implements OnInit {
     // manipulatsioonidega sama mälukoht
     // this.cartService.itemsInCart.splice(0);
     // võrdusmärgiga ehk uue väärtuse andmisega uus mälukoht
-    this.cartService.itemsInCart = [];
-    this.cartItems = this.cartService.itemsInCart;
+    this.cartService.emptyCart();
+    this.cartItems = this.cartService.getCartItems();
     this.calculateSumOfCart();
   }
 

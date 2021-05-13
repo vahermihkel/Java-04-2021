@@ -1,0 +1,25 @@
+input.ng-invalid.ng-touched {
+  border: 1.5px solid red;
+}
+
+/* .main-button, .small-button {
+  sarnased 15 asja
+}
+
+.main-button {
+  height: 100px;
+}
+
+.small-button {
+  height: 50px;
+} */
+
+/* 
+  . - klass
+  # - id
+  div - tag
+
+  tingimused koos - peavad kõik kehtima
+  tingimustel space vahel - CSS läheb peale viimasele ja peab olema esimeste sees
+  tinimgustel koma vahel - kehtib kõigile
+*/
