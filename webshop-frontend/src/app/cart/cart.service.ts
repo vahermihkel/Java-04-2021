@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Item } from '../models/item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private itemsInCart: {imgSrc: string, title: string, price: number, category: string}[] = [];
+  private itemsInCart: Item[] = [];
 
   constructor() { }
 
-  addToCart(item: {imgSrc: string, title: string, price: number, category: string}) {
+  addToCart(item: Item): void {
     this.itemsInCart.push(item);
   }
 
-  removeFromCart(index: number) {
+  removeFromCart(index: number): void {
     this.itemsInCart.splice(index, 1);
   }
 
-  emptyCart() {
+  emptyCart(): void {
     this.itemsInCart = [];
   }
 
-  getCartItems() {
-    return this.itemsInCart;
+  getCartItems(): Item[] {
+    return this.itemsInCart.slice();
   }
 }

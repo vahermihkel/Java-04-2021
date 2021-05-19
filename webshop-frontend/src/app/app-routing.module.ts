@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: "toode/:itemId", component: ViewComponent },
   { path: "admin", component: AdminHomeComponent },
   { path: "admin/lisa-ese", component: ItemAddComponent },
-  { path: "admin/muuda-eset", component: ItemEditComponent },
+  { path: "admin/muuda-eset/:itemId", component: ItemEditComponent },
   { path: "admin/esemete-list", component: ItemListComponent },
 ];
 

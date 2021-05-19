@@ -1,1 +1,30 @@
-<p>item-edit works!</p>
+<!-- <div routerLink="..">TAGASI</div> -->
+<div routerLink="/admin">TAGASI</div>
+
+<form (ngSubmit)="onSubmit(editItemForm)" [formGroup]="editItemForm">
+  <label>NIMETUS</label><br>
+  <input type="text" size="80" formControlName="title" placeholder="Sisesta toote nimetus" required><br>
+  <label>HIND</label><br>
+  <input type="number" formControlName="price" placeholder="Sisesta toote hind" required><br>
+  <label>PILDI URL</label><br>
+  <input type="text" formControlName="imgSrc" placeholder="Sisesta toote nimetus" required><br>
+  <label>KATEGOORIA</label><br>
+  <input type="text" formControlName="category" placeholder="Sisesta toote nimetus" pattern="^[a-zA-Z]+$" required><br>
+  <!-- <button type="button">INFO</button> -->
+  <button type="submit" [disabled]="editItemForm.invalid">SISESTA</button>
+  <!-- <input type="submit" [disabled]="addItemForm.invalid" value="SISESTA"> -->
+  <!-- PROPERTY BINDING -->
+</form>
+
+<!-- 
+ABSOLUTE PATH - alates algusest  
+routerLink="/admin/esemete-list"
+import { Service } from 'src/app/services/
+img src="assets/pilt.jpg"
+
+RELATIVE PATH - sellest kus olen
+routerLink="../../esemete-list"
+import { Service } from '../services/
+img src="../../assets/pilt.jpg"
+
+-->

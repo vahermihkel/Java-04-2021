@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Item } from '../models/item.model';
 import { CartService } from './cart.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { CartService } from './cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartItems: {imgSrc: string, title: string, price: number, category: string}[] = [];
+  cartItems: Item[] = [];
   sumOfCart = 0; // primitiivil pole üldiselt tüüpi vaja
 
   // DEPENDENCY INJECTION
@@ -26,12 +27,13 @@ export class CartComponent implements OnInit {
     this.calculateSumOfCart();
   }
 
-  onRemoveFromCart(index: number) {
+  onRemoveFromCart(index: number): void {
     this.cartService.removeFromCart(index);
+    this.cartItems = this.cartService.getCartItems();
     this.calculateSumOfCart();
   }
 
-  onEmptyCart() {
+  onEmptyCart(): void {
     // manipulatsioonidega sama mälukoht
     // this.cartService.itemsInCart.splice(0);
     // võrdusmärgiga ehk uue väärtuse andmisega uus mälukoht
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit {
     this.calculateSumOfCart();
   }
 
-  calculateSumOfCart() {
+  calculateSumOfCart(): void {
     this.sumOfCart = 0;
     this.cartItems.forEach(cartItem => {
       this.sumOfCart += cartItem.price;

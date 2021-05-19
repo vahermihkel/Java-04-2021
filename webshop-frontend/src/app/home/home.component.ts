@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart/cart.service';
+import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
 
 @Component({
@@ -8,7 +9,9 @@ import { ItemService } from '../services/item.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  items: {imgSrc: string, title: string, price: number, category: string}[] = [];
+  items: Item[] = [];
+  kuupaev = new Date();
+  protsent = 0.5;
 
   // compiling time - compiled successfully
   constructor(private cartService: CartService, 
@@ -28,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
   // ngOnInit - hakatakse HTMLi vaatama
 
-  onAddToCart(item: {imgSrc: string, title: string, price: number, category: string}) {
+  onAddToCart(item: Item): void {
     // this.items = [];
     // this.items.push(item);
     // CartComponent.cartItems.push(item); - EI SAA!!

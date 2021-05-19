@@ -4,4 +4,9 @@
   <div>{{ item.title }}</div>
   <div>{{ item.price }}</div>
   <button (click)="onDeleteItem(i)">X</button>
+  <button routerLink="/admin/muuda-eset/{{i}}">Muuda eset</button>
 </div>
+
+
+<!-- routerLink="/admin/muuda-eset/" absoluutne --> 
+<!-- routerLink="../muuda-eset/" relatiivne -->
