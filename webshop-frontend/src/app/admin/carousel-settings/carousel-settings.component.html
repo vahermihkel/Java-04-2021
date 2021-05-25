@@ -1,0 +1,15 @@
+<form 
+  (ngSubmit)="onSubmit()" 
+  [formGroup]="carouselSettingsForm"
+  *ngIf="carouselSettingsForm"
+  >
+  <label>Pildi vahetuse kiirus</label><br>
+  <input type="number" formControlName="interval"><br>
+  <label>Käib ringiratast</label><br>
+  <input type="checkbox" formControlName="wrap"><br>
+  <label>Klaviatuuriga saab liikud</label><br>
+  <input type="checkbox" formControlName="keyboard"><br>
+  <label>Hiire peal paus</label><br>
+  <input type="checkbox" formControlName="pauseOnHover"><br>
+  <button>{{ 'Salvesta' | uppercase }}</button>
+</form>

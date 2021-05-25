@@ -19,6 +19,8 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { ViewComponent } from './home/view/view.component';
 import { ItemPricePipe } from './pipes/item-price.pipe';
 import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselSettingsComponent } from './admin/carousel-settings/carousel-settings.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
     AdminHomeComponent,
     ViewComponent,
     ItemPricePipe,
-    ShortenTitlePipe
+    ShortenTitlePipe,
+    CarouselSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,13 +44,14 @@ import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        })
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

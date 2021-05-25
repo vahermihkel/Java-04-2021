@@ -16,4 +16,9 @@ export class ShortenTitlePipe implements PipeTransform {
   // 1. Näitab kasutajale teistmoodi ilma algandmeid muutmata
   // 2. Saan taaskasutada koodi
 
+  // ELas metsas mutionu, keset kuuski -- .split(" ")
+  // ["Elas", "metsas", "mutionu,", "keset", "kuuski"] -- .slice(0,3)
+  // ["Elas", "metsas", "mutionu,"] .join("::")
+  // Elas::metsas::mutionu  - string
+
 }
