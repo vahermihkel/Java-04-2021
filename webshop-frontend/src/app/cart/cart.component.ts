@@ -47,6 +47,7 @@ export class CartComponent implements OnInit {
     this.cartItems.forEach(cartItem => {
       this.sumOfCart += cartItem.price;
     });
+    this.cartService.cartItemsChanged.next(this.cartService.getCartItems());
   }
 
 }

@@ -9,7 +9,7 @@ export class ItemPricePipe implements PipeTransform {
     return value.toLocaleString('ee', 
       {minimumFractionDigits: 2, 
         maximumFractionDigits: 2},
-    );
+    ).replace(",", " ");
   }
 
 }

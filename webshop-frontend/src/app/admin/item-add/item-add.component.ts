@@ -28,8 +28,10 @@ export class ItemAddComponent implements OnInit {
         formValue.imgSrc,
         formValue.category
         )
-      this.itemService.addItem(item);
-      form.reset();
+      // this.itemService.addItem(item);
+      this.itemService.addItemToDatabase(item).subscribe(()=>{
+        form.reset();
+      });
       // TEEME UUE ITEM.SERVICE-i
       // TÕSTAME HOME.COMPONENT SEEST KÕIK ITEMS ITEM.SERVICE'I SISSE
       // TEEME HOME.COMPONENT SEEST ÜHENDUSE SERVICE-GA

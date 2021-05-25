@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +18,7 @@ import { ItemListComponent } from './admin/item-list/item-list.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { ViewComponent } from './home/view/view.component';
 import { ItemPricePipe } from './pipes/item-price.pipe';
+import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
 
 @NgModule({
   declarations: [
@@ -27,15 +32,28 @@ import { ItemPricePipe } from './pipes/item-price.pipe';
     ItemListComponent,
     AdminHomeComponent,
     ViewComponent,
-    ItemPricePipe
+    ItemPricePipe,
+    ShortenTitlePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}

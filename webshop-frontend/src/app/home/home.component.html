@@ -1,23 +1,24 @@
+<!-- {{ kuupaev | date }}<br>
 {{ kuupaev | date:'fullDate' }}<br>
 {{ kuupaev | date:'fullTime' }} <br>
 {{ kuupaev | date:'mediumTime' }} <br>
 {{ kuupaev | date:'shortDate' }} <br>
 
-<!-- {{ items | json }} -->
+{{ items | json }}
 
 {{ protsent | percent }} <br>
 
-{{ protsent * 100000 | currency }}
-
-<br><br><br>
+{{ protsent * 100000 | currency }} -->
+<!-- 
+<br><br><br> -->
 
 
 <!-- string interpolation -->
 <div class="items-wrapper">
   <div class="item" *ngFor="let item of items; let i = index">
     <img class="item-image" routerLink="toode/{{i}}" src="{{ item.imgSrc }}">
-    <div class="item-title">{{ item.title }}</div>
-    <div class="item-price">{{ item.price }}</div>
+    <div class="item-title">{{ item.title | shortenTitle }}</div>
+    <div class="item-price">{{ item.price | itemPrice }}</div>
     <button class="btn btn-primary" (click)="onAddToCart(item)">LISA OSTUKORVI</button>
     <!-- event binding -->
   </div>

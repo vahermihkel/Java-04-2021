@@ -7,7 +7,7 @@
 <div *ngFor="let cartItem of cartItems; let i = index">
   <img class="item-picture" src="{{ cartItem.imgSrc }}">
   <div class="item-title">{{ cartItem.title }}</div>
-  <div class="item-price">{{ cartItem.price }}</div>
+  <div class="item-price">{{ cartItem.price | itemPrice }}</div>
   <button (click)="onRemoveFromCart(i)">X</button>
 </div>
 
