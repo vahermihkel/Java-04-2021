@@ -12,16 +12,16 @@
 <!-- 
 <br><br><br> -->
 
-<ngb-carousel class="carousel-wrapper" *ngIf="images">
+<ngb-carousel class="carousel-wrapper" *ngIf="images.length > 0">
   <ng-template *ngFor="let image of images" ngbSlide>
     <div class="picsum-img-wrapper">
       <!-- src="{{images[0]}}" -->
-      <img [src]="image" alt="Random first slide">
+      <img [src]="image.url" alt="{{image.alt}}">
       <!-- src="{{image}}" -->
     </div>
     <div class="carousel-caption">
-      <h3>10 seconds between slides...</h3>
-      <p>This carousel uses customized default values.</p>
+      <h3>{{ image.header }}</h3>
+      <p>{{ image.text }}</p>
     </div>
   </ng-template>
 </ngb-carousel>

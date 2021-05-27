@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { CarouselSettings } from './carousel-settings.model';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { CarouselSettings } from './models/carousel-settings.model';
 import { CarouselService } from './carousel.service';
+import { CarouselImage } from './models/carousel-image.model';
 
 @Component({
   selector: 'app-carousel-settings',
@@ -10,10 +11,17 @@ import { CarouselService } from './carousel.service';
 })
 export class CarouselSettingsComponent implements OnInit {
   carouselSettingsForm!: FormGroup;
+  images: CarouselImage[] = [];
 
   constructor(private carousel: CarouselService) { }
 
   ngOnInit(): void {
+    this.carousel.getImagesFromFirebase().subscribe(images=>{
+      for (const key in images) {
+        this.images.push(images[key]);
+      }
+    })
+    // this.images = this.carousel.images;
     // REFRESHIGA EI TULE
     this.carousel.getSettingsFromFirebase().subscribe(settings => {
       this.carouselSettingsForm = new FormGroup({
@@ -25,7 +33,7 @@ export class CarouselSettingsComponent implements OnInit {
     })
   }
 
-  onSubmit() {
+  onSettingsSubmit() {
     let carouselSettings = new CarouselSettings(
       this.carouselSettingsForm.value.interval,
       this.carouselSettingsForm.value.wrap,
@@ -37,5 +45,16 @@ export class CarouselSettingsComponent implements OnInit {
     this.carousel.saveSettingsToFirebase(carouselSettings).subscribe(()=>{
       alert("Uuendused salvestatud!");
     });
+  }
+
+  onDeleteImage(i: number) {
+    this.images.splice(i,1);
+    this.carousel.saveImagesToFirebase(this.images).subscribe();
+  }
+
+  onImageSubmit(imageAddForm: NgForm) {
+    // this.carousel.images.push(imageAddForm.value);
+    this.carousel.addImageToFirebase(imageAddForm.value).subscribe();
+    imageAddForm.reset();
   }
 }

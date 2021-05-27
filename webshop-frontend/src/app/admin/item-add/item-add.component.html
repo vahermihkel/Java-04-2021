@@ -3,7 +3,7 @@
 
 <form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
   <label>NIMETUS</label><br>
-  <input type="text" ngModel name="title" placeholder="Sisesta toote nimetus" required><br>
+  <textarea autosize type="text" ngModel name="title" placeholder="Sisesta toote nimetus" required></textarea><br>
   <label>HIND</label><br>
   <input type="number" ngModel name="price" placeholder="Sisesta toote hind" required><br>
   <label>PILDI URL</label><br>

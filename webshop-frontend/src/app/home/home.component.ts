@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselService } from '../admin/carousel-settings/carousel.service';
+import { CarouselImage } from '../admin/carousel-settings/models/carousel-image.model';
 import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
@@ -11,7 +12,10 @@ import { ItemService } from '../services/item.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  images!: string[];
+  images: CarouselImage[] = [];
+  images1 = [123,1312,123]
+  texts = ["1.pildi tekst", "2.sdas"];
+  
 
   items: Item[] = [];
   // kuupaev = new Date();
@@ -39,16 +43,20 @@ export class HomeComponent implements OnInit {
     // this.config.keyboard = this.carousel.carouselSettings.keyboard;
     // this.config.pauseOnHover = this.carousel.carouselSettings.pauseOnHover;
     this.carousel.getSettingsFromFirebase().subscribe(settings => {
-      this.images = [123,700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
-      this.config.interval = settings.interval;
-      console.log(this.config.interval);
-      this.config.wrap = settings.wrap;
-      this.config.keyboard = settings.keyboard;
-      this.config.pauseOnHover = settings.pauseOnHover;
-      if (this.images.length === 1) {
-        this.config.showNavigationArrows = false;
-        this.config.showNavigationIndicators = false;
-      }
+      this.carousel.getImagesFromFirebase().subscribe(images=>{
+        for (const key in images) {
+          this.images.push(images[key]);
+        }
+        if (this.images.length === 1) {
+          this.config.showNavigationArrows = false;
+          this.config.showNavigationIndicators = false;
+        }
+        this.config.interval = settings.interval;
+        console.log(this.config.interval);
+        this.config.wrap = settings.wrap;
+        this.config.keyboard = settings.keyboard;
+        this.config.pauseOnHover = settings.pauseOnHover;
+      })
     })
 
     console.log("HOME componendis");

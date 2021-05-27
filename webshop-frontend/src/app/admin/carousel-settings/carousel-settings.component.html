@@ -1,5 +1,5 @@
 <form 
-  (ngSubmit)="onSubmit()" 
+  (ngSubmit)="onSettingsSubmit()" 
   [formGroup]="carouselSettingsForm"
   *ngIf="carouselSettingsForm"
   >
@@ -12,4 +12,28 @@
   <label>Hiire peal paus</label><br>
   <input type="checkbox" formControlName="pauseOnHover"><br>
   <button>{{ 'Salvesta' | uppercase }}</button>
+</form>
+
+<br><br>
+
+<div *ngIf="images" >
+  <div class="image" *ngFor="let image of images; let i = index">
+    <img [src]="image.url">
+    <div>Pildi pealkiri: {{ image.header }}</div>
+    <div>Pildi tekst: {{ image.text }}</div>
+    <div>Pildi alternatiivtekst: {{ image.alt }}</div>
+    <button (click)="onDeleteImage(i)">X</button>
+  </div>
+</div>
+
+<form (ngSubmit)="onImageSubmit(imageAddForm)" #imageAddForm="ngForm">
+  <label>Url</label><br>
+  <input type="text" ngModel name="url" required><br>
+  <label>Pealkiri</label><br>
+  <input type="text" ngModel name="header" required><br>
+  <label>Tekst</label><br>
+  <input type="text" ngModel name="text" required><br>
+  <label>Alternatiivtekst</label><br>
+  <input type="text" ngModel name="alt" required><br>
+  <button [disabled]="imageAddForm.invalid">Lisa</button>
 </form>
