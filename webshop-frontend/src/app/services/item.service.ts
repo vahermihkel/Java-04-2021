@@ -34,14 +34,24 @@ export class ItemService {
   saveItemsToDatabase(items: Item[]) {
     return this.httpClient.put("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json", items);
   }
-  // PUT - asendab kõik ära mis andmebaasis juba on sellega mis ma kaasa PUT päringuga annan
+  // // PUT - asendab kõik ära mis andmebaasis juba on sellega mis ma kaasa PUT päringuga annan
+
+  // addItemToDatabase(item: Item) {
+  //   return this.httpClient.post("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json", item);
+  // }
+  // // POST - lisab olemasolevale selle ühe juurde mida ma POST päringuga kaasa annan
+
+  // getItemsFromDatabase() {
+  //   return this.httpClient.get<Item[]>("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json");
+  // }
+
 
   addItemToDatabase(item: Item) {
-    return this.httpClient.post("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json", item);
+    return this.httpClient.post("http://localhost:8080/add-item", item);
   }
   // POST - lisab olemasolevale selle ühe juurde mida ma POST päringuga kaasa annan
 
   getItemsFromDatabase() {
-    return this.httpClient.get<Item[]>("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json");
+    return this.httpClient.get<Item[]>("http://localhost:8080/items");
   }
 }
