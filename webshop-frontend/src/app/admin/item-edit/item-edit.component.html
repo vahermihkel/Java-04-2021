@@ -1,7 +1,7 @@
 <!-- <div routerLink="..">TAGASI</div> -->
 <div routerLink="/admin">TAGASI</div>
 
-<form (ngSubmit)="onSubmit(editItemForm)" [formGroup]="editItemForm">
+<form (ngSubmit)="onSubmit(editItemForm)" *ngIf="editItemForm" [formGroup]="editItemForm">
   <label>NIMETUS</label><br>
   <input type="text" size="80" formControlName="title" placeholder="Sisesta toote nimetus" required><br>
   <label>HIND</label><br>
@@ -9,7 +9,7 @@
   <label>PILDI URL</label><br>
   <input type="text" formControlName="imgSrc" placeholder="Sisesta toote nimetus" required><br>
   <label>KATEGOORIA</label><br>
-  <input type="text" formControlName="category" placeholder="Sisesta toote nimetus" pattern="^[a-zA-Z]+$" required><br>
+  <input type="text" formControlName="category" placeholder="Sisesta toote nimetus" required><br>
   <!-- <button type="button">INFO</button> -->
   <button type="submit" [disabled]="editItemForm.invalid">SISESTA</button>
   <!-- <input type="submit" [disabled]="addItemForm.invalid" value="SISESTA"> -->

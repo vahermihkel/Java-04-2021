@@ -5,6 +5,8 @@ import { CarouselImage } from '../admin/carousel-settings/models/carousel-image.
 import { CartService } from '../cart/cart.service';
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
+import { Direction } from './direction.enum';
+import { Property } from './property.enum';
 
 @Component({
   selector: 'app-home',
@@ -13,21 +15,15 @@ import { ItemService } from '../services/item.service';
 })
 export class HomeComponent implements OnInit {
   images: CarouselImage[] = [];
-  images1 = [123,1312,123]
-  texts = ["1.pildi tekst", "2.sdas"];
-  
-
   items: Item[] = [];
-  // kuupaev = new Date();
-  // protsent = 0.5;
+  sortState = {direction: Direction.ORIGINAL, property: Property.EMPTY };
 
-  // compiling time - compiled successfully
+
   constructor(private cartService: CartService, 
       private itemService: ItemService,
       private config: NgbCarouselConfig,
       private carousel: CarouselService) {
   }
-  // 19.17
 
   // cartService2 = new CartService();      VARIANT 2
 
@@ -62,9 +58,7 @@ export class HomeComponent implements OnInit {
     console.log("HOME componendis");
     // this.items = this.itemService.getItems();
     this.itemService.getItemsFromDatabase().subscribe(items => {
-      for (const key in items) {
-        this.items.push(items[key]);
-      }
+      this.items = items;
       console.log("SIIA JÕUAN HILJEM");
     })
     console.log(this.items.length);
@@ -73,6 +67,59 @@ export class HomeComponent implements OnInit {
     
   }
   // ngOnInit - hakatakse HTMLi vaatama
+
+  onSortByTitle() {
+    this.itemService.getItemsFromDatabase().subscribe(items => {
+      this.items = items;
+      switch (this.sortState.direction) {
+        case Direction.ORIGINAL: 
+          this.items.sort((previousItem,currentItem)=>
+            previousItem.title.localeCompare(currentItem.title)
+          )
+          this.sortState.direction = Direction.ASC;
+          this.sortState.property = Property.TITLE;
+        break;
+        case Direction.ASC: 
+          this.items.sort((previousItem,currentItem)=>
+            currentItem.title.localeCompare(previousItem.title)
+          )
+          this.sortState.direction = Direction.DESC;
+          this.sortState.property = Property.TITLE;
+        break;
+        case Direction.DESC: 
+          this.sortState.direction = Direction.ORIGINAL;
+          this.sortState.property = Property.EMPTY;
+        break;
+      }
+    })
+      
+  }
+
+  onSortByPrice() {
+    this.itemService.getItemsFromDatabase().subscribe(items => {
+      this.items = items;
+      switch (this.sortState.direction) {
+        case Direction.ORIGINAL: 
+          this.items.sort((previousItem,currentItem)=>
+            previousItem.price - currentItem.price
+          )
+          this.sortState.direction = Direction.ASC;
+          this.sortState.property = Property.PRICE;
+        break;
+        case Direction.ASC: 
+          this.items.sort((previousItem,currentItem)=>
+            currentItem.price - previousItem.price
+          )
+          this.sortState.direction = Direction.DESC;
+          this.sortState.property = Property.PRICE;
+        break;
+        case Direction.DESC: 
+          this.sortState.direction = Direction.ORIGINAL;
+          this.sortState.property = Property.EMPTY;
+        break;
+      }
+    })
+  }
 
   onAddToCart(item: Item): void {
     // this.itemService.saveItemsToDatabase().subscribe();

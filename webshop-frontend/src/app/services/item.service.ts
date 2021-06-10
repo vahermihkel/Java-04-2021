@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Item } from '../models/item.model';
 
 @Injectable({
@@ -15,25 +16,25 @@ export class ItemService {
     this.items.push(item);
   }
 
-  deleteItem(index: number): void {
-    this.items.splice(index,1);
-  }
+  // deleteItem(index: number): void {
+  //   this.items.splice(index,1);
+  // }
 
   // getItems(): Item[] {
   //   return this.items; 
   // }
 
-  getItem(id: number): Item {
-    return this.items[id];
-  }
+  // getItem(id: number): Item {
+  //   return this.items[id];
+  // }
 
-  editItem(item: Item, id: number): void {
-    this.items[id] = item;
-  }
+  // editItem(item: Item, id: number): void {
+  //   this.items[id] = item;
+  // }
 
-  saveItemsToDatabase(items: Item[]) {
-    return this.httpClient.put("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json", items);
-  }
+  // saveItemsToDatabase(items: Item[]) {
+  //   return this.httpClient.put("https://java-04-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json", items);
+  // }
   // // PUT - asendab kõik ära mis andmebaasis juba on sellega mis ma kaasa PUT päringuga annan
 
   // addItemToDatabase(item: Item) {
@@ -54,4 +55,22 @@ export class ItemService {
   getItemsFromDatabase() {
     return this.httpClient.get<Item[]>("http://localhost:8080/items");
   }
+  
+  editItem(item: Item): Observable<Object> {
+    return this.httpClient.post("http://localhost:8080/edit-item", item);
+  }
+
+  getItem(id: number): Observable<Item> {
+    return this.httpClient.get<Item>("http://localhost:8080/view-item/" + id);
+  }
+
+  deleteItem(id: number): Observable<Object> {
+    return this.httpClient.delete<Item>("http://localhost:8080/delete-item/" + id);
+  }
+
+  // Observable - jälgitav, tehakse päring ära, siis .subscribe sisu läheb käima ja rohkem midagi ei toimu (1 kord, päring käib ära)
+  // Subject - kuulatav, läheb iga kord käima kui .next toimub
+
+  // mõlemad on asünkroonsed ehk kood läheb edasi ja nemad lähevad mingil hetkel lihtsalt käima
+  
 }

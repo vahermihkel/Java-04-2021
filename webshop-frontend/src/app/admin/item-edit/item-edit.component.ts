@@ -23,30 +23,33 @@ export class ItemEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get("itemId"));
-    let item = this.itemService.getItem(this.id);
-    this.editItemForm = new FormGroup({
-      title: new FormControl(item.title),
-      price: new FormControl(item.price),
-      imgSrc: new FormControl(item.imgSrc),
-      category: new FormControl(item.category),
+    this.itemService.getItem(this.id).subscribe(item => {
+      this.editItemForm = new FormGroup({
+        title: new FormControl(item.title),
+        price: new FormControl(item.price),
+        imgSrc: new FormControl(item.imgSrc),
+        category: new FormControl(item.category),
+      });
     });
   }
 
   onSubmit(form: FormGroup): void {
-    console.log(form);
-    console.log(form.value);
-    console.log(form.value.title);
-    console.log(form.value.price);
+    // console.log(form);
+    // console.log(form.value);
+    // console.log(form.value.title);
+    // console.log(form.value.price);
     if (form.valid) {
       let formValue = form.value;
       let item = new Item(
         formValue.title,
         formValue.price,
         formValue.imgSrc,
-        formValue.category
+        formValue.category,
+        this.id
         )
-      this.itemService.editItem(item, this.id);
-      this.router.navigateByUrl("/admin/esemete-list")
+      this.itemService.editItem(item).subscribe(()=>{
+        this.router.navigateByUrl("/admin/esemete-list");
+      });
       // form.reset();
       // TEEME UUE ITEM.SERVICE-i
       // TÕSTAME HOME.COMPONENT SEEST KÕIK ITEMS ITEM.SERVICE'I SISSE

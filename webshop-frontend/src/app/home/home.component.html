@@ -26,13 +26,27 @@
   </ng-template>
 </ngb-carousel>
 
+<br><br>
+
+<div *ngFor="let category of items | uniqueCategory">{{ category }}</div>
+
+<br><br>
+
+<div style="display: flex;">
+  <span>Järjesta:</span>
+  <button (click)="onSortByTitle()">Tähestiku järgi</button>
+  <button (click)="onSortByPrice()">Hinna järgi</button>
+</div>
+
+<br><br>
+
 
 <div *ngIf="!items">Esemeid ei ole!</div>
 
 <!-- string interpolation -->
 <div class="items-wrapper">
-  <div class="item" *ngFor="let item of items; let i = index">
-    <img class="item-image" routerLink="toode/{{i}}" src="{{ item.imgSrc }}">
+  <div class="item" *ngFor="let item of items">
+    <img class="item-image" routerLink="toode/{{item.id}}" src="{{ item.imgSrc }}">
     <div class="item-title">{{ item.title | shortenTitle }}</div>
     <div class="item-price">{{ item.price | itemPrice }}</div>
     <button class="btn btn-primary" (click)="onAddToCart(item)">LISA OSTUKORVI</button>

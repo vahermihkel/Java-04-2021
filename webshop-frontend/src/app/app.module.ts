@@ -22,6 +22,7 @@ import { ShortenTitlePipe } from './pipes/shorten-title.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselSettingsComponent } from './admin/carousel-settings/carousel-settings.component';
 import { AutosizeDirective } from './admin/item-add/autosize.directive';
+import { UniqueCategoryPipe } from './pipes/unique-category.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AutosizeDirective } from './admin/item-add/autosize.directive';
     ItemPricePipe,
     ShortenTitlePipe,
     CarouselSettingsComponent,
-    AutosizeDirective
+    AutosizeDirective,
+    UniqueCategoryPipe
   ],
   imports: [
     BrowserModule,

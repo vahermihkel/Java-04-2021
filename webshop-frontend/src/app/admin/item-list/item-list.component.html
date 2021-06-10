@@ -1,10 +1,10 @@
 <div routerLink="/admin">TAGASI</div>
 
-<div *ngFor="let item of items; let i = index">
+<div *ngFor="let item of items">
   <div>{{ item.title }}</div>
   <div>{{ item.price | itemPrice }}</div>
-  <button (click)="onDeleteItem(i)">X</button>
-  <button routerLink="/admin/muuda-eset/{{i}}">Muuda eset</button>
+  <button (click)="onDeleteItem(item.id)">X</button>
+  <button routerLink="/admin/muuda-eset/{{item.id}}">Muuda eset</button>
 </div>
 
 
