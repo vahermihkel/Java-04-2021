@@ -1,5 +1,6 @@
 <!-- <div routerLink="..">TAGASI</div> -->
-<div routerLink="/admin">TAGASI</div>
+<!-- <div routerLink="/admin">TAGASI</div> -->
+<app-back-button [url]="'/admin'"></app-back-button>
 
 <form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
   <label>NIMETUS</label><br>

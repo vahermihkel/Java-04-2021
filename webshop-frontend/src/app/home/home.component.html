@@ -28,7 +28,7 @@
 
 <br><br>
 
-<div *ngFor="let category of items | uniqueCategory">{{ category }}</div>
+<div (click)="onCategorySelect(category)" *ngFor="let category of itemsOriginal | uniqueCategory">{{ category }}</div>
 
 <br><br>
 
@@ -40,17 +40,14 @@
 
 <br><br>
 
+<div *ngIf="isItemAddedToCart">Ese lisatud ostukorvi</div>
 
-<div *ngIf="!items">Esemeid ei ole!</div>
+<div *ngIf="!itemsOriginal">Esemeid ei ole!</div>
 
 <!-- string interpolation -->
 <div class="items-wrapper">
-  <div class="item" *ngFor="let item of items">
-    <img class="item-image" routerLink="toode/{{item.id}}" src="{{ item.imgSrc }}">
-    <div class="item-title">{{ item.title | shortenTitle }}</div>
-    <div class="item-price">{{ item.price | itemPrice }}</div>
-    <button class="btn btn-primary" (click)="onAddToCart(item)">LISA OSTUKORVI</button>
-    <!-- event binding -->
+  <div class="item" *ngFor="let itemShown of itemsShown">
+    <app-item-card (addedToCartEvent)="onAddedToCart($event)" [item]=itemShown></app-item-card>
   </div>
 </div>
 
