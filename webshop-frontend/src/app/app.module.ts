@@ -25,6 +25,8 @@ import { AutosizeDirective } from './admin/item-add/autosize.directive';
 import { UniqueCategoryPipe } from './pipes/unique-category.pipe';
 import { ItemCardComponent } from './home/item-card/item-card.component';
 import { BackButtonComponent } from './admin/back-button/back-button.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { BackButtonComponent } from './admin/back-button/back-button.component';
     AutosizeDirective,
     UniqueCategoryPipe,
     ItemCardComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -5,9 +5,13 @@
 </ng-template>
 
 <div *ngFor="let cartItem of cartItems; let i = index">
-  <img class="item-picture" src="{{ cartItem.imgSrc }}">
-  <div class="item-title">{{ cartItem.title }}</div>
-  <div class="item-price">{{ cartItem.price | itemPrice }}</div>
+  <img class="item-picture" src="{{ cartItem.cartItem.imgSrc }}">
+  <div class="item-title">{{ cartItem.cartItem.title }}</div>
+  <div class="item-price">{{ cartItem.cartItem.price | itemPrice }}</div>
+  <div (click)="onReduceFromCart(cartItem.cartItem)">-</div>
+  <div class="item-count">{{ cartItem.count }} tk</div>
+  <div (click)="onAddToCart(cartItem.cartItem)">+</div>
+  <div class="item-total">{{ cartItem.cartItem.price * cartItem.count | itemPrice }}</div>
   <button (click)="onRemoveFromCart(i)">X</button>
 </div>
 

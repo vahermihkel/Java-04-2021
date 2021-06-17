@@ -1,6 +1,9 @@
 <div class="main-navbar">
   <img class="logo" routerLink="/" src="assets/VinylShop.png">
-  <button routerLink="admin">{{'ADMINI VAADE' | translate}}</button>
+  <button *ngIf="isLoggedIn" routerLink="admin">{{'ADMINI VAADE' | translate}}</button>
+  <button *ngIf="!isLoggedIn" routerLink="login">Logi sisse</button>
+  <button *ngIf="!isLoggedIn" routerLink="signup">Registreeru</button>
+  <button *ngIf="isLoggedIn" (click)="onLogout()">Logi välja</button>
   <button (click)="useLanguage('en')">en</button>
   <button (click)="useLanguage('ee')">ee</button>
   <span class="cart-button" routerLink="ostukorv">{{ sumOfCart | itemPrice }} €</span>

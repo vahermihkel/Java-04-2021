@@ -4,15 +4,54 @@
 
 <form (ngSubmit)="onSubmit(addItemForm)" #addItemForm="ngForm">
   <label>NIMETUS</label><br>
-  <textarea autosize type="text" ngModel name="title" placeholder="Sisesta toote nimetus" required></textarea><br>
+  <textarea 
+    autosize 
+    type="text" 
+    ngModel 
+    name="title" 
+    placeholder="Sisesta toote nimetus" 
+    required>
+  </textarea><br>
   <label>HIND</label><br>
-  <input type="number" ngModel name="price" placeholder="Sisesta toote hind" required><br>
+  <input 
+    type="number" 
+    ngModel 
+    name="price" 
+    placeholder="Sisesta toote hind" 
+    required><br>
+  <label>RIBAKOOD</label><br>
+  <input
+    type="text" 
+    pattern="^[0-9]+$" 
+    ngModel 
+    name="barcode" 
+    minlength="9" 
+    maxlength="9" 
+    placeholder="Sisesta toote ribakood" 
+    required
+    [(ngModel)]="barcode"
+    (keyup)="checkBarcodeUniqueness()" 
+    ><br>
+    <div *ngIf="!barcodeUnique">Ribakood pole unikaalne!</div>
   <label>PILDI URL</label><br>
-  <input type="text" ngModel name="imgSrc" placeholder="Sisesta toote nimetus" required><br>
+  <input type="text" 
+    ngModel 
+    name="imgSrc" 
+    placeholder="Sisesta toote nimetus" 
+    required><br>
   <label>KATEGOORIA</label><br>
-  <input type="text" ngModel name="category" placeholder="Sisesta toote nimetus" required><br>
+  <input 
+    type="text" 
+    ngModel 
+    name="category" 
+    placeholder="Sisesta toote nimetus" 
+    required><br>
   <!-- <button type="button">INFO</button> -->
-  <button type="submit" [disabled]="addItemForm.invalid">SISESTA</button>
+  <button 
+    type="submit" 
+    [disabled]="addItemForm.invalid || !barcodeUnique">
+      SISESTA
+  </button>
   <!-- <input type="submit" [disabled]="addItemForm.invalid" value="SISESTA"> -->
   <!-- PROPERTY BINDING -->
 </form>

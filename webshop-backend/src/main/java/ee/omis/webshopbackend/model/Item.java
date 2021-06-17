@@ -2,10 +2,7 @@ package ee.omis.webshopbackend.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -21,4 +18,5 @@ public class Item {
     private String imgSrc;
     private double price;
     private String category;
+    private Integer barcode;
 }

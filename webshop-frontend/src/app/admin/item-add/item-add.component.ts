@@ -9,11 +9,37 @@ import { ItemService } from 'src/app/services/item.service';
   styleUrls: ['./item-add.component.css']
 })
 export class ItemAddComponent implements OnInit {
+  barcode = 0;
+  barcodeUnique = true;
 
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
   }
+
+  checkBarcodeUniqueness() {
+    this.barcodeUnique = true;
+    this.itemService.getItemsFromDatabase().subscribe(items => {
+      items.forEach(item => {
+        if (item.barcode == this.barcode) {
+          this.barcodeUnique = false;
+          return;
+        } 
+      });
+    })
+  }
+
+  // checkBarcodeUniqueness() {
+  //   this.barcodeUnique = true;
+  //   this.itemService.getItemsFromDatabase().subscribe(items => {
+  //     items.forEach(_item => {
+  //       if (_item.barcode == this.barcode && this.barcode != item.barcode) {
+  //         this.barcodeUnique = false;
+  //         return;
+  //       } 
+  //     });
+  //   })
+  // }
 
   onSubmit(form: NgForm): void {
     console.log(form);
@@ -26,7 +52,8 @@ export class ItemAddComponent implements OnInit {
         formValue.title,
         formValue.price,
         formValue.imgSrc,
-        formValue.category
+        formValue.category,
+        formValue.barcode
         )
       // this.itemService.addItem(item);
       this.itemService.addItemToDatabase(item).subscribe(()=>{

@@ -6,6 +6,8 @@
   <input type="text" size="80" formControlName="title" placeholder="Sisesta toote nimetus" required><br>
   <label>HIND</label><br>
   <input type="number" formControlName="price" placeholder="Sisesta toote hind" required><br>
+  <label>RIBAKOOD</label><br>
+  <input type="text" pattern="^[0-9]+$" formControlName="barcode" minlength="9" maxlength="9" placeholder="Sisesta toote ribakood"><br>
   <label>PILDI URL</label><br>
   <input type="text" formControlName="imgSrc" placeholder="Sisesta toote nimetus" required><br>
   <label>KATEGOORIA</label><br>

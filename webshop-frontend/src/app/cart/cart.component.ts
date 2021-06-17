@@ -8,28 +8,28 @@ import { CartService } from './cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartItems: Item[] = [];
+  cartItems: {cartItem: Item, count: number}[] = [];
   sumOfCart = 0; // primitiivil pole üldiselt tüüpi vaja
 
   // DEPENDENCY INJECTION
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    console.log("CART componendis");
-    this.cartItems = this.cartService.getCartItems();
-    
-    /*[{title: .., price: 20},{title: .., price: 30}]
-      cartItem =>  {title: .., price: 20}  
-      20    = 0 + 20
-      cartItem =>  {title: .., price: 30} 
-      50    = 20 + 30
-    */
+    this.calculateSumOfCart();
+  }
+
+  onReduceFromCart(item: Item) {
+    this.cartService.reduceFromCart(item);
+    this.calculateSumOfCart();
+  }
+
+  onAddToCart(item: Item) {
+    this.cartService.addToCart(item);
     this.calculateSumOfCart();
   }
 
   onRemoveFromCart(index: number): void {
     this.cartService.removeFromCart(index);
-    this.cartItems = this.cartService.getCartItems();
     this.calculateSumOfCart();
   }
 
@@ -38,14 +38,14 @@ export class CartComponent implements OnInit {
     // this.cartService.itemsInCart.splice(0);
     // võrdusmärgiga ehk uue väärtuse andmisega uus mälukoht
     this.cartService.emptyCart();
-    this.cartItems = this.cartService.getCartItems();
     this.calculateSumOfCart();
   }
 
   calculateSumOfCart(): void {
+    this.cartItems = this.cartService.getCartItems();
     this.sumOfCart = 0;
     this.cartItems.forEach(cartItem => {
-      this.sumOfCart += cartItem.price;
+      this.sumOfCart += cartItem.cartItem.price * cartItem.count;
     });
     this.cartService.cartItemsChanged.next(this.cartService.getCartItems());
   }
